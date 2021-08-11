@@ -6,8 +6,12 @@ export default function App() {
     fabric: 60,
     consumption: 1,
     cutmake: 70,
-    trims: 15
+    trims: 15,
+    percentage: 1
   });
+  const margin = state.fabric * state.consumption + state.cutmake + state.trims;
+
+  const marginPercentage = (margin * state.percentage) / 100;
 
   return (
     <div>
@@ -72,6 +76,7 @@ export default function App() {
             valueLabelDisplay='on'
             min={0}
             max={4}
+            step={0.1}
             color='secondary'
           />
           <p
@@ -154,23 +159,85 @@ export default function App() {
           style={{
             width: 200,
             marginBottom: 20,
+            height: 230,
             display: 'flex',
-            justifyContent: 'center'
+            flexDirection: 'column',
+            alignItems: 'center'
           }}
         >
-          <div
+          <Slider
+            orientation='vertical'
+            value={state.percentage}
+            onChange={(e, newValue) =>
+              setState({ ...state, percentage: newValue })
+            }
+            valueLabelDisplay='on'
+            min={0}
+            max={100}
+            color='secondary'
+          />
+          <p
             style={{
-              width: 100,
-              height: 100,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 50,
-              background: '#67b383',
-              color: '#fff'
+              margin: 0,
+              color: '#777',
+              fontSize: 10,
+              marginTop: 10,
+              fontStyle: 'italic'
             }}
           >
-            ₹{state.fabric * state.consumption + state.cutmake + state.trims}
+            Margin Percentage
+          </p>
+        </div>
+        <div>
+          <div
+            style={{
+              width: margin + 50,
+              marginBottom: 20,
+              display: 'flex',
+              justifyContent: 'center',
+              position: 'relative',
+              alignItems: 'center'
+            }}
+          >
+            <div
+              style={{
+                width: margin,
+                height: margin,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: '50%',
+                background: '#67b383',
+                color: '#fff'
+              }}
+            >
+              ₹{margin}
+            </div>
+            <div
+              style={{
+                width: marginPercentage,
+                height: marginPercentage,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: '50%',
+                background: '#dd7632',
+                color: '#fff',
+                opacity: 0.4,
+                position: 'absolute'
+              }}
+            ></div>
+          </div>
+          <div style={{ fontSize: 10, color: '#777' }}>
+            <b>Price:</b> <span style={{ fontSize: 13 }}>₹{margin}</span>
+          </div>
+          <div style={{ fontSize: 10, color: '#777' }}>
+            <b>Margin Percent Price:</b>{' '}
+            <span style={{ fontSize: 13 }}>{marginPercentage}</span>
+          </div>
+          <div style={{ fontSize: 10, color: '#777' }}>
+            <b>Total Price:</b>{' '}
+            <span style={{ fontSize: 13 }}>{marginPercentage + margin}</span>
           </div>
         </div>
       </div>
