@@ -4,7 +4,7 @@ import { AppBar, Slider } from '@material-ui/core';
 export default function App() {
   const [state, setState] = useState({
     fabric: 60,
-    consumption: 0,
+    consumption: 1,
     cutmake: 70,
     trims: 15
   });
@@ -71,7 +71,7 @@ export default function App() {
             }
             valueLabelDisplay='on'
             min={0}
-            max={200}
+            max={4}
             color='secondary'
           />
           <p
